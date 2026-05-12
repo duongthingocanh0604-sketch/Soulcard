@@ -298,7 +298,7 @@ html, body {
 <div id="sc-header">
   <div id="sc-logo-area">
     <!-- Thêm ảnh logo vào đây -->
-    <img src="images/logo-soulcard.JPG" alt="Soulcard Logo" id="main-logo">
+    <img src="logo-soulcard.JPG" alt="Soulcard Logo" id="main-logo">
     
     <div id="sc-text-group">
       <div id="sc-logo">Soulcard</div>
@@ -365,62 +365,62 @@ const savedCards = JSON.parse(localStorage.getItem('mySoulCards')) || [];
 // Đây là danh sách gốc (giữ nguyên không đổi)
 const defaultCards = [
     // CẢM XÚC (8 thẻ)
-    { id: 101, label: 'Vui vẻ', slug: 'vui-ve', icon: 'images/cam-xuc/vui.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 102, label: 'Yêu thích', slug: 'yeu-thich', icon: 'images/cam-xuc/yeuthich.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 103, label: 'Ngạc nhiên', slug: 'ngac-nhien', icon: 'images/cam-xuc/ngacnhien.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 104, label: 'Tức giận', slug: 'tuc-gian', icon: 'images/cam-xuc/tucgian.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 105, label: 'Buồn bã', slug: 'buon', icon: 'images/cam-xuc/buồn.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 106, label: 'Lo lắng', slug: 'lo-lang', icon: 'images/cam-xuc/lolang.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 107, label: 'Sợ hãi', slug: 'so-hai', icon: 'images/cam-xuc/sohai.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
-    { id: 108, label: 'Thất vọng', slug: 'that-vong', icon: 'images/cam-xuc/thatvong.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 101, label: 'Vui vẻ', slug: 'vui-ve', icon: 'cam-xuc/vui.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 102, label: 'Yêu thích', slug: 'yeu-thich', icon: 'cam-xuc/yeuthich.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 103, label: 'Ngạc nhiên', slug: 'ngac-nhien', icon: 'cam-xuc/ngacnhien.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 104, label: 'Tức giận', slug: 'tuc-gian', icon: 'cam-xuc/tucgian.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 105, label: 'Buồn bã', slug: 'buon', icon: 'cam-xuc/buồn.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 106, label: 'Lo lắng', slug: 'lo-lang', icon: 'cam-xuc/lolang.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 107, label: 'Sợ hãi', slug: 'so-hai', icon: 'cam-xuc/sohai.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 108, label: 'Thất vọng', slug: 'that-vong', icon: 'cam-xuc/thatvong.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
 
     // HOẠT ĐỘNG (10 thẻ)
-    { id: 201, label: 'Chơi đồ chơi', slug: 'choi-do-choi', icon: 'images/hoat-dong/choidochoi.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 202, label: 'Đi công viên', slug: 'di-cong-vien', icon: 'images/hoat-dong/dicongvien.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 203, label: 'Đi tắm', slug: 'di-tam', icon: 'images/hoat-dong/ditam.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 204, label: 'Đọc sách', slug: 'doc-sach', icon: 'images/hoat-dong/docsach.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 205, label: 'Học bài', slug: 'hoc-bai', icon: 'images/hoat-dong/hocbai.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 206, label: 'Nghe nhạc', slug: 'nghe-nhac', icon: 'images/hoat-dong/nghenhac.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 207, label: 'Rửa tay', slug: 'rua-tay', icon: 'images/hoat-dong/ruatay.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 208, label: 'Thu dọn', slug: 'thu-don', icon: 'images/hoat-dong/thudon.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 209, label: 'Vẽ tranh', slug: 've-tranh', icon: 'images/hoat-dong/vetranh.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
-    { id: 210, label: 'Xem TV', slug: 'xem-tv', icon: 'images/hoat-dong/XEMTV.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 201, label: 'Chơi đồ chơi', slug: 'choi-do-choi', icon: 'hoat-dong/choidochoi.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 202, label: 'Đi công viên', slug: 'di-cong-vien', icon: 'hoat-dong/dicongvien.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 203, label: 'Đi tắm', slug: 'di-tam', icon: 'hoat-dong/ditam.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 204, label: 'Đọc sách', slug: 'doc-sach', icon: 'hoat-dong/docsach.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 205, label: 'Học bài', slug: 'hoc-bai', icon: 'hoat-dong/hocbai.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 206, label: 'Nghe nhạc', slug: 'nghe-nhac', icon: 'hoat-dong/nghenhac.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 207, label: 'Rửa tay', slug: 'rua-tay', icon: 'hoat-dong/ruatay.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 208, label: 'Thu dọn', slug: 'thu-don', icon: 'hoat-dong/thudon.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 209, label: 'Vẽ tranh', slug: 've-tranh', icon: 'hoat-dong/vetranh.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 210, label: 'Xem TV', slug: 'xem-tv', icon: 'hoat-dong/XEMTV.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
 
     // NHU CẦU (10 thẻ - Có các file đuôi .wav)
-    { id: 301, label: 'Buồn ngủ', slug: 'buon-ngu', icon: 'images/nhu-cau/buongu.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 302, label: 'Đau', slug: 'dau', icon: 'images/nhu-cau/dau.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 303, label: 'Dừng lại', slug: 'dung-lai', icon: 'images/nhu-cau/dunglai.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 304, label: 'Lạnh', slug: 'lanh', icon: 'images/nhu-cau/lạnh.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 305, label: 'Mệt', slug: 'met', icon: 'images/nhu-cau/met.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 306, label: 'Nóng', slug: 'nong', icon: 'images/nhu-cau/nong.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 307, label: 'Vệ sinh', slug: 'di-ve-sinh', icon: 'images/nhu-cau/divesinh.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 308, label: 'Đói', slug: 'doi', icon: 'images/nhu-cau/doi.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 309, label: 'Giúp con', slug: 'giup-con', icon: 'images/nhu-cau/gipcon.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
-    { id: 310, label: 'Khát', slug: 'khat', icon: 'images/nhu-cau/khat.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 301, label: 'Buồn ngủ', slug: 'buon-ngu', icon: 'nhu-cau/buongu.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 302, label: 'Đau', slug: 'dau', icon: 'nhu-cau/dau.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 303, label: 'Dừng lại', slug: 'dung-lai', icon: 'nhu-cau/dunglai.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 304, label: 'Lạnh', slug: 'lanh', icon: 'nhu-cau/lạnh.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 305, label: 'Mệt', slug: 'met', icon: 'nhu-cau/met.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 306, label: 'Nóng', slug: 'nong', icon: 'nhu-cau/nong.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 307, label: 'Vệ sinh', slug: 'di-ve-sinh', icon: 'nhu-cau/divesinh.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 308, label: 'Đói', slug: 'doi', icon: 'nhu-cau/doi.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 309, label: 'Giúp con', slug: 'giup-con', icon: 'nhu-cau/gipcon.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 310, label: 'Khát', slug: 'khat', icon: 'nhu-cau/khat.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
 
     // GIAO TIẾP (8 thẻ)
-    { id: 401, label: 'Cảm ơn', slug: 'cam-on', icon: 'images/giao-tiep-xa-hoi/camon.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 402, label: 'Chia sẻ', slug: 'chia-se', icon: 'images/giao-tiep-xa-hoi/chiase.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 403, label: 'Chờ chút', slug: 'cho-chut', icon: 'images/giao-tiep-xa-hoi/chomotchut.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 404, label: 'Con muốn', slug: 'con-muon', icon: 'images/giao-tiep-xa-hoi/conmuon.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 405, label: 'Giúp đỡ', slug: 'giup-do', icon: 'images/giao-tiep-xa-hoi/giupdo.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 406, label: 'Nói chuyện', slug: 'noi-chuyen', icon: 'images/giao-tiep-xa-hoi/noichuyen.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 407, label: 'Tạm biệt', slug: 'tam-biet', icon: 'images/giao-tiep-xa-hoi/tambiet.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
-    { id: 408, label: 'Xin lỗi', slug: 'xin-loi', icon: 'images/giao-tiep-xa-hoi/xinloi.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 401, label: 'Cảm ơn', slug: 'cam-on', icon: 'giao-tiep-xa-hoi/camon.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 402, label: 'Chia sẻ', slug: 'chia-se', icon: 'giao-tiep-xa-hoi/chiase.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 403, label: 'Chờ chút', slug: 'cho-chut', icon: 'giao-tiep-xa-hoi/chomotchut.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 404, label: 'Con muốn', slug: 'con-muon', icon: 'giao-tiep-xa-hoi/conmuon.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 405, label: 'Giúp đỡ', slug: 'giup-do', icon: 'giao-tiep-xa-hoi/giupdo.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 406, label: 'Nói chuyện', slug: 'noi-chuyen', icon: 'giao-tiep-xa-hoi/noichuyen.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 407, label: 'Tạm biệt', slug: 'tam-biet', icon: 'giao-tiep-xa-hoi/tambiet.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 408, label: 'Xin lỗi', slug: 'xin-loi', icon: 'giao-tiep-xa-hoi/xinloi.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
 
     // KHẨN CẤP (5 thẻ)
-    { id: 501, label: '111', slug: '111', icon: 'images/sdt-khan-cap/111.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
-    { id: 502, label: '112', slug: '112', icon: 'images/sdt-khan-cap/112.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
-    { id: 503, label: '113', slug: '113', icon: 'images/sdt-khan-cap/113.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
-    { id: 504, label: '114', slug: '114', icon: 'images/sdt-khan-cap/114.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
-    { id: 505, label: '115', slug: '115', icon: 'images/sdt-khan-cap/115.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 501, label: '111', slug: '111', icon: 'sdt-khan-cap/111.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 502, label: '112', slug: '112', icon: 'sdt-khan-cap/112.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 503, label: '113', slug: '113', icon: 'sdt-khan-cap/113.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 504, label: '114', slug: '114', icon: 'sdt-khan-cap/114.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 505, label: '115', slug: '115', icon: 'sdt-khan-cap/115.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
 
     // ĐỐI TƯỢNG & NƠI CHỐN (5 thẻ)
-    { id: 601, label: 'Anh chị em', slug: 'anh-chi-em', icon: 'images/doi-tuong-va-noi-chon/anhchiem.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
-    { id: 602, label: 'Bố', slug: 'bo', icon: 'images/doi-tuong-va-noi-chon/bô.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
-    { id: 603, label: 'Mẹ', slug: 'me', icon: 'images/doi-tuong-va-noi-chon/me.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
-    { id: 701, label: 'Nhà', slug: 'nha', icon: 'images/doi-tuong-va-noi-chon/nha.JPG', cat: 'doi-tuong-noi-chon', accent: '#3B6D11', bg: '#EAF3DE' },
-    { id: 702, label: 'Trường học', slug: 'truong', icon: 'images/doi-tuong-va-noi-chon/truong.JPG', cat: 'doi-tuong-noi-chon', accent: '#3B6D11', bg: '#EAF3DE' }
+    { id: 601, label: 'Anh chị em', slug: 'anh-chi-em', icon: 'doi-tuong-va-noi-chon/anhchiem.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
+    { id: 602, label: 'Bố', slug: 'bo', icon: 'doi-tuong-va-noi-chon/bô.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
+    { id: 603, label: 'Mẹ', slug: 'me', icon: 'doi-tuong-va-noi-chon/me.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
+    { id: 701, label: 'Nhà', slug: 'nha', icon: 'doi-tuong-va-noi-chon/nha.JPG', cat: 'doi-tuong-noi-chon', accent: '#3B6D11', bg: '#EAF3DE' },
+    { id: 702, label: 'Trường học', slug: 'truong', icon: 'doi-tuong-va-noi-chon/truong.JPG', cat: 'doi-tuong-noi-chon', accent: '#3B6D11', bg: '#EAF3DE' }
 ];
 let CARDS = [...defaultCards, ...savedCards];
 let sentence = [];
@@ -529,7 +529,7 @@ async function speakMessage() {
         return new Promise((resolve) => {
             const wavFiles = ['buon-ngu', 'dau', 'di-ve-sinh', 'doi', 'dung-lai', 'giup-con', 'khat', 'lanh', 'met'];
             const ext = wavFiles.includes(slug) ? 'wav' : 'mp3';
-            const audioPath = `images/${currentRegion}/${slug}.${ext}`;
+            const audioPath = `${currentRegion}/${slug}.${ext}`;
             
             const audio = new Audio(audioPath);
             audio.playbackRate = speed; // Áp dụng tốc độ chọn trên thanh trượt
