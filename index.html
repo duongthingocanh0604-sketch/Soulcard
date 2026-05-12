@@ -1,0 +1,615 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&family=Be+Vietnam+Pro:wght@400;700&display=swap');
+  :root {
+    /* Màu sắc chuẩn Soulcard */
+    --sc-purple: #A78BFA;       /* Tím chủ đạo */
+    --sc-mint: #BDEFE3;         /* Xanh mint phụ */
+    --sc-cream-bg: #FFF8F0;     /* Nền kem nhạt */
+    --sc-text-dark: #2F2F2F;    /* Chữ xám đậm */
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+ #sc-app {
+    font-family: 'Be Vietnam Pro', sans-serif; /* Đổi phông chữ nội dung */
+    background: var(--sc-cream-bg);            /* Đổi sang màu nền kem */
+    min-height: 600px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  #sc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #sc-logo {
+    font-family: 'Nunito', sans-serif; /* Phông chữ tròn trịa cho logo */
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--sc-purple);           /* Màu tím chủ đạo */
+    letter-spacing: -0.5px;
+  }
+#sc-tagline {
+  font-family: 'Be Vietnam Pro', sans-serif; /* Phông chữ nội dung */
+  font-size: 13px;                          /* Kích thước chữ nhỏ hơn logo */
+  font-weight: 400;                         /* Nét chữ mảnh */
+  color: var(--sc-text-dark);               /* Màu xám đậm */
+  font-style: italic;                       /* In nghiêng theo phong cách slogan */
+  margin-top: 4px;                          /* Khoảng cách với tên Soulcard */
+  letter-spacing: 0.2px;
+}
+  #sc-logo span { color: var(--color-text-secondary); font-weight: 400; font-size: 13px; margin-left: 6px; }
+
+ #message-window {
+    background: var(--white);
+    border: 3px dashed var(--sc-mint); /* Viền nét đứt màu xanh mint */
+    border-radius: 20px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  #message-label { font-size: 11px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+  #message-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 36px;
+    align-items: center;
+  }
+  .msg-chip {
+    background: var(--sc-teal-light);
+    color: var(--sc-teal-dark);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .msg-chip:hover { opacity: 0.75; }
+  .msg-chip .rm { font-size: 12px; opacity: 0.6; }
+  #msg-empty { font-size: 13px; color: var(--color-text-tertiary); font-style: italic; }
+
+  #message-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    padding-top: 8px;
+    flex-wrap: wrap;
+  }
+  .btn-speak {
+    background: var(--sc-teal);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn-speak:hover { opacity: 0.85; }
+  .btn-speak:active { transform: scale(0.97); }
+  .btn-speak.speaking { background: var(--sc-coral); animation: pulse 0.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+  .btn-clear {
+    background: transparent;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+  .btn-clear:hover { background: var(--color-background-secondary); }
+
+  #category-nav {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  #category-nav::-webkit-scrollbar { display: none; }
+  .cat-btn {
+    border: none;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s, transform 0.1s;
+    opacity: 0.65;
+  }
+  .cat-btn.active { opacity: 1; transform: scale(1.04); }
+  .cat-btn:hover { opacity: 0.9; }
+
+  #card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+
+  .comm-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 14px 8px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    user-select: none;
+    min-height: 100px;
+    border-top: 3px solid transparent;
+  }
+  .comm-card:hover { transform: translateY(-2px); border-color: var(--card-accent); }
+  .comm-card:active { transform: scale(0.95); }
+  .comm-card.pressed { transform: scale(0.93); }
+
+  .card-icon {
+    font-size: 32px;
+    line-height: 1;
+    filter: none;
+  }
+  .card-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  #tts-status {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 2px 0;
+    min-height: 18px;
+  }
+
+  #sc-footer {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .footer-btn {
+    background: transparent;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+  .footer-btn:hover { background: var(--color-background-secondary); }
+
+#sc-logo-area {
+  display: flex;
+  align-items: center;    /* Căn logo và chữ nằm ngang hàng nhau */
+  justify-content: center; /* Đưa toàn bộ cụm logo ra giữa màn hình */
+  gap: 15px;               /* Khoảng cách an toàn giữa logo và chữ */
+  margin-bottom: 20px;
+}
+
+#main-logo {
+  height: 55px;            /* Chỉnh độ cao logo vừa phải */
+  width: auto;             /* Tự động tính chiều rộng để không bị méo ảnh */
+  object-fit: contain;
+}
+
+#sc-text-group {
+  display: flex;
+  flex-direction: column;  /* Tên Soulcard ở trên, Tagline ở dưới */
+  text-align: left;        /* Căn chữ lề trái so với logo */
+}
+/* Tối ưu tổng thể cho màn hình nhỏ */
+@media (max-width: 600px) {
+  #sc-app {
+    padding: 10px; /* Giảm khoảng cách viền ngoài */
+    gap: 10px;
+  }
+
+  /* Logo và Tagline nhỏ lại để tiết kiệm diện tích */
+  #main-logo {
+    height: 40px; 
+  }
+  #sc-logo {
+    font-size: 18px;
+  }
+  #sc-tagline {
+    font-size: 11px;
+  }
+
+  /* Cửa sổ ghép câu: Tăng độ cao để dễ nhìn khi nhiều thẻ */
+  #message-window {
+    padding: 8px;
+    border-width: 2px;
+  }
+  
+  /* Lưới thẻ: Quan trọng nhất - Chia 3 cột trên điện thoại */
+  #card-grid {
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 8px;
+  }
+
+  /* Thẻ giao tiếp: Chỉnh kích thước icon và chữ cho vừa tay */
+  .comm-card {
+    min-height: 90px;
+    padding: 8px 4px;
+  }
+  .card-icon {
+    height: 50px !important; /* Thu nhỏ ảnh một chút */
+  }
+  .card-label {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  /* Thanh chọn danh mục: Cho phép vuốt ngang mượt hơn */
+  #category-nav {
+    gap: 4px;
+    padding-bottom: 8px;
+  }
+  .cat-btn {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  /* Các nút bấm: Làm to ra để dễ chạm bằng ngón tay (Touch target) */
+  .btn-speak {
+    width: 100%; /* Nút Đọc câu to rõ ràng */
+    justify-content: center;
+    padding: 12px;
+  }
+  
+  .btn-clear, .footer-btn {
+    padding: 10px;
+    flex-grow: 1; /* Các nút phụ chia đều không gian */
+    text-align: center;
+  }
+}
+
+/* Ngăn người dùng phóng to thu nhỏ lung tung gây lệch giao diện */
+html, body {
+  touch-action: manipulation;
+  overflow-x: hidden;
+}
+</style>
+
+<div id="sc-app">
+<div id="sc-header">
+  <div id="sc-logo-area">
+    <!-- Thêm ảnh logo vào đây -->
+    <img src="images/logo-soulcard.JPG" alt="Soulcard Logo" id="main-logo">
+    
+    <div id="sc-text-group">
+      <div id="sc-logo">Soulcard</div>
+      <div id="sc-tagline">Lắng nghe con từ những điều nhỏ nhất</div>
+    </div>
+  </div>
+</div>
+  <div id="message-window">
+    <div id="message-label">Câu đang soạn</div>
+    <div id="message-chips"><span id="msg-empty">Chọn thẻ để bắt đầu ghép câu...</span></div>
+   <div id="message-actions" style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+    <!-- Dòng 1: Chọn giọng -->
+    <div style="display: flex; align-items: center; gap: 10px; padding: 5px; border-bottom: 1px solid #eee;">
+        <span style="font-size: 12px; font-weight: bold; color: var(--sc-purple);">GIỌNG:</span>
+        <button onclick="currentRegion = 'GIỌNG BẮC'; setStatus('Đã chọn giọng Bắc')" 
+                style="padding: 4px 10px; cursor: pointer; border-radius: 5px; border: 1px solid var(--sc-purple); background: white;">Miền Bắc</button>
+        <button onclick="currentRegion = 'GIỌNG NAM'; setStatus('Đã chọn giọng Nam')" 
+                style="padding: 4px 10px; cursor: pointer; border-radius: 5px; border: 1px solid var(--sc-purple); background: white;">Miền Nam</button>
+    </div>
+
+    <!-- Dòng 2: Tốc độ và Nút bấm chính -->
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 5px; background: #f0fdfa; padding: 5px 10px; border-radius: 8px; flex-grow: 1;">
+            <span style="font-size: 11px; font-weight: bold; color: #134e4a;">TỐC ĐỘ:</span>
+            <input type="range" id="speed-range" min="0.5" max="2" step="0.1" value="1.0" style="flex-grow: 1;">
+            <span id="speed-val" style="font-size: 12px; font-weight: bold; width: 30px;">1.0x</span>
+        </div>
+
+        <button class="btn-speak" onclick="speakMessage()" style="background: #10b981; color: white; padding: 10px 20px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            ĐỌC CÂU
+        </button>
+
+        <button class="btn-clear" onclick="clearMessage()" style="padding: 8px; font-size: 12px;">Xóa hết</button>
+        <button class="btn-clear" onclick="removeLastWord()" style="padding: 8px; font-size: 12px;">← Xóa từ cuối</button>
+        <button onclick="openAddCard()" style="padding: 8px 12px; background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px;">+ Thêm thẻ</button>
+    </div>
+</div>
+
+  <div id="category-nav"></div>
+  <div id="card-grid"></div>
+  <div id="tts-status"></div>
+
+  <div id="sc-footer">
+    <button class="footer-btn" onclick="sendPrompt('Propose more Vietnamese AAC card ideas for Soulcard: daily routines, school vocabulary, and medical needs')">Gợi ý thêm thẻ ↗</button>
+    <button class="footer-btn" onclick="sendPrompt('Show me how to implement the NFC card management dashboard for Soulcard')">Module NFC ↗</button>
+  </div>
+</div>
+
+<script>
+let currentRegion = "GIỌNG BẮC";
+const CATEGORIES = [
+  { id: 'all', label: 'Tất cả', color: '#888780', bg: '#F1EFE8' },
+  { id: 'cam-xuc', label: 'Cảm xúc', color: '#993556', bg: '#FBEAF0' },
+  { id: 'hoat-dong', label: 'Hoạt động', color: '#BA7517', bg: '#FAEEDA' },
+  { id: 'nhu-cau', label: 'Nhu cầu', color: '#1D9E75', bg: '#E1F5EE' },
+  { id: 'giao-tiep', label: 'Giao tiếp', color: '#185FA5', bg: '#E6F1FB' },
+  { id: 'khan-cap', label: 'Khẩn cấp', color: '#D85A30', bg: '#FAECE7' },
+  { id: 'doi-tuong-noi-chon', label: 'Đối tượng & Nơi chốn', color: '#534AB7', bg: '#EEEDFE' }
+];
+// Lấy thẻ bạn tự thêm từ bộ nhớ máy tính
+const savedCards = JSON.parse(localStorage.getItem('mySoulCards')) || [];
+
+// Đây là danh sách gốc (giữ nguyên không đổi)
+const defaultCards = [
+    // CẢM XÚC (8 thẻ)
+    { id: 101, label: 'Vui vẻ', slug: 'vui-ve', icon: 'images/cam-xuc/vui.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 102, label: 'Yêu thích', slug: 'yeu-thich', icon: 'images/cam-xuc/yeuthich.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 103, label: 'Ngạc nhiên', slug: 'ngac-nhien', icon: 'images/cam-xuc/ngacnhien.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 104, label: 'Tức giận', slug: 'tuc-gian', icon: 'images/cam-xuc/tucgian.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 105, label: 'Buồn bã', slug: 'buon', icon: 'images/cam-xuc/buồn.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 106, label: 'Lo lắng', slug: 'lo-lang', icon: 'images/cam-xuc/lolang.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 107, label: 'Sợ hãi', slug: 'so-hai', icon: 'images/cam-xuc/sohai.png', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+    { id: 108, label: 'Thất vọng', slug: 'that-vong', icon: 'images/cam-xuc/thatvong.jpg', cat: 'cam-xuc', accent: '#993556', bg: '#FBEAF0' },
+
+    // HOẠT ĐỘNG (10 thẻ)
+    { id: 201, label: 'Chơi đồ chơi', slug: 'choi-do-choi', icon: 'images/hoat-dong/choidochoi.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 202, label: 'Đi công viên', slug: 'di-cong-vien', icon: 'images/hoat-dong/dicongvien.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 203, label: 'Đi tắm', slug: 'di-tam', icon: 'images/hoat-dong/ditam.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 204, label: 'Đọc sách', slug: 'doc-sach', icon: 'images/hoat-dong/docsach.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 205, label: 'Học bài', slug: 'hoc-bai', icon: 'images/hoat-dong/hocbai.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 206, label: 'Nghe nhạc', slug: 'nghe-nhac', icon: 'images/hoat-dong/nghenhac.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 207, label: 'Rửa tay', slug: 'rua-tay', icon: 'images/hoat-dong/ruatay.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 208, label: 'Thu dọn', slug: 'thu-don', icon: 'images/hoat-dong/thudon.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 209, label: 'Vẽ tranh', slug: 've-tranh', icon: 'images/hoat-dong/vetranh.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+    { id: 210, label: 'Xem TV', slug: 'xem-tv', icon: 'images/hoat-dong/XEMTV.jpg', cat: 'hoat-dong', accent: '#BA7517', bg: '#FAEEDA' },
+
+    // NHU CẦU (10 thẻ - Có các file đuôi .wav)
+    { id: 301, label: 'Buồn ngủ', slug: 'buon-ngu', icon: 'images/nhu-cau/buongu.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 302, label: 'Đau', slug: 'dau', icon: 'images/nhu-cau/dau.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 303, label: 'Dừng lại', slug: 'dung-lai', icon: 'images/nhu-cau/dunglai.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 304, label: 'Lạnh', slug: 'lanh', icon: 'images/nhu-cau/lạnh.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 305, label: 'Mệt', slug: 'met', icon: 'images/nhu-cau/met.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 306, label: 'Nóng', slug: 'nong', icon: 'images/nhu-cau/nong.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 307, label: 'Vệ sinh', slug: 'di-ve-sinh', icon: 'images/nhu-cau/divesinh.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 308, label: 'Đói', slug: 'doi', icon: 'images/nhu-cau/doi.JPG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 309, label: 'Giúp con', slug: 'giup-con', icon: 'images/nhu-cau/gipcon.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+    { id: 310, label: 'Khát', slug: 'khat', icon: 'images/nhu-cau/khat.PNG', cat: 'nhu-cau', accent: '#1D9E75', bg: '#E1F5EE' },
+
+    // GIAO TIẾP (8 thẻ)
+    { id: 401, label: 'Cảm ơn', slug: 'cam-on', icon: 'images/giao-tiep-xa-hoi/camon.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 402, label: 'Chia sẻ', slug: 'chia-se', icon: 'images/giao-tiep-xa-hoi/chiase.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 403, label: 'Chờ chút', slug: 'cho-chut', icon: 'images/giao-tiep-xa-hoi/chomotchut.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 404, label: 'Con muốn', slug: 'con-muon', icon: 'images/giao-tiep-xa-hoi/conmuon.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 405, label: 'Giúp đỡ', slug: 'giup-do', icon: 'images/giao-tiep-xa-hoi/giupdo.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 406, label: 'Nói chuyện', slug: 'noi-chuyen', icon: 'images/giao-tiep-xa-hoi/noichuyen.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 407, label: 'Tạm biệt', slug: 'tam-biet', icon: 'images/giao-tiep-xa-hoi/tambiet.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+    { id: 408, label: 'Xin lỗi', slug: 'xin-loi', icon: 'images/giao-tiep-xa-hoi/xinloi.JPG', cat: 'giao-tiep', accent: '#185FA5', bg: '#E6F1FB' },
+
+    // KHẨN CẤP (5 thẻ)
+    { id: 501, label: '111', slug: '111', icon: 'images/sdt-khan-cap/111.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 502, label: '112', slug: '112', icon: 'images/sdt-khan-cap/112.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 503, label: '113', slug: '113', icon: 'images/sdt-khan-cap/113.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 504, label: '114', slug: '114', icon: 'images/sdt-khan-cap/114.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+    { id: 505, label: '115', slug: '115', icon: 'images/sdt-khan-cap/115.JPG', cat: 'khan-cap', accent: '#D85A30', bg: '#FAEECA' },
+
+    // ĐỐI TƯỢNG & NƠI CHỐN (5 thẻ)
+    { id: 601, label: 'Anh chị em', slug: 'anh-chi-em', icon: 'images/doi-tuong-va-noi-chon/anhchiem.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
+    { id: 602, label: 'Bố', slug: 'bo', icon: 'images/doi-tuong-va-noi-chon/bô.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
+    { id: 603, label: 'Mẹ', slug: 'me', icon: 'images/doi-tuong-va-noi-chon/me.JPG', cat: 'doi-tuong-noi-chon', accent: '#534AB7', bg: '#EEEDFE' },
+    { id: 701, label: 'Nhà', slug: 'nha', icon: 'images/doi-tuong-va-noi-chon/nha.JPG', cat: 'doi-tuong-noi-chon', accent: '#3B6D11', bg: '#EAF3DE' },
+    { id: 702, label: 'Trường học', slug: 'truong', icon: 'images/doi-tuong-va-noi-chon/truong.JPG', cat: 'doi-tuong-noi-chon', accent: '#3B6D11', bg: '#EAF3DE' }
+];
+let CARDS = [...defaultCards, ...savedCards];
+let sentence = [];
+let currentCat = 'all';
+let isSpeaking = false;
+
+function renderCategories() {
+  const nav = document.getElementById('category-nav');
+  nav.innerHTML = CATEGORIES.map(c => `
+    <button class="cat-btn${c.id===currentCat?' active':''}"
+      style="background:${c.bg};color:${c.color};"
+      onclick="filterCat('${c.id}')">${c.label}</button>
+  `).join('');
+}
+
+function renderCards() {
+  const grid = document.getElementById('card-grid');
+  // Lọc thẻ theo danh mục đang chọn
+  const filtered = currentCat === 'all' ? CARDS : CARDS.filter(c => c.cat === currentCat);
+  
+  // Vẽ từng chiếc thẻ lên màn hình (Đoạn đã sửa để hiện ảnh)
+  grid.innerHTML = filtered.map(card => `
+    <div class="comm-card" style="border-top-color:${card.accent}; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;"
+      onclick="addWord('${card.label}', this)"
+      role="button">
+      
+      ${card.id > 1000 ? `
+        <div onclick="deleteCard(${card.id}, event)" 
+             style="position: absolute; top: 0; right: 5px; color: #ff4444; font-weight: bold; font-size: 18px; padding: 5px; cursor: pointer; z-index: 10;">
+             ✕
+        </div>
+      ` : ''}
+
+      <div class="card-icon" style="width: 100%; height: 80px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
+          <img src="${card.icon}" 
+               style="max-width: 100%; max-height: 100%; object-fit: contain;" 
+               onerror="this.style.display='none'; this.parentNode.innerHTML='❌'">
+      </div>
+      
+      <div class="card-label" style="font-size: 14px; font-weight: 500; text-align: center;">${card.label}</div>
+    </div>
+  `).join('');
+}
+
+function filterCat(id) {
+  currentCat = id;
+  renderCategories();
+  renderCards();
+}
+function renderMessage() {
+  const container = document.getElementById('message-chips');
+  if (sentence.length === 0) {
+    container.innerHTML = '<span id="msg-empty">Chọn thẻ để bắt đầu ghép câu...</span>';
+  } else {
+    container.innerHTML = sentence.map((w,i) => `
+      <div class="msg-chip" onclick="removeWord(${i})">
+        ${w} <span class="rm">✕</span>
+      </div>
+    `).join('');
+  }
+}
+
+function addWord(label, el) {
+  sentence.push(label);
+  renderMessage();
+  if (el) {
+    el.classList.add('pressed');
+    setTimeout(() => el.classList.remove('pressed'), 200);
+  }
+}
+
+function removeWord(index) {
+  sentence.splice(index, 1);
+  renderMessage();
+}
+
+function removeLastWord() {
+  if (sentence.length > 0) {
+    sentence.pop();
+    renderMessage();
+  }
+}
+
+function clearMessage() {
+  sentence = [];
+  renderMessage();
+  setStatus('');
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function setStatus(msg) {
+  document.getElementById('tts-status').textContent = msg;
+}
+
+async function speakMessage() {
+    if (sentence.length === 0) {
+        setStatus('Vui lòng chọn thẻ trước!');
+        return;
+    }
+
+    const speed = document.getElementById('speed-range').value || 1;
+    setStatus('Đang chuẩn bị giọng: ' + currentRegion);
+
+    // Hàm phụ để phát một âm thanh và đợi nó kết thúc
+    const playAudio = (slug) => {
+        return new Promise((resolve) => {
+            const wavFiles = ['buon-ngu', 'dau', 'di-ve-sinh', 'doi', 'dung-lai', 'giup-con', 'khat', 'lanh', 'met'];
+            const ext = wavFiles.includes(slug) ? 'wav' : 'mp3';
+            const audioPath = `images/${currentRegion}/${slug}.${ext}`;
+            
+            const audio = new Audio(audioPath);
+            audio.playbackRate = speed; // Áp dụng tốc độ chọn trên thanh trượt
+            
+            audio.onended = resolve; // Khi đọc xong thì báo để đọc từ tiếp theo
+            audio.onerror = () => {
+                console.error("Không thấy file:", audioPath);
+                resolve(); // Nếu lỗi file này thì bỏ qua để đọc từ tiếp theo
+            };
+            audio.play().catch(resolve);
+        });
+    };
+
+    // Vòng lặp đọc từng thẻ trong câu
+    for (let wordLabel of sentence) {
+        const cardInfo = CARDS.find(c => c.label === wordLabel);
+        if (cardInfo && cardInfo.slug) {
+            setStatus('Đang đọc: ' + wordLabel);
+            await playAudio(cardInfo.slug);
+        }
+    }
+    
+    setStatus('Đã đọc xong!');
+}
+function openAddCard() {
+    const label = prompt("Tên thẻ mới là gì? (Ví dụ: Đi tắm)");
+    const icon = prompt("Biểu tượng Emoji là gì? (Ví dụ: 🚿)");
+    
+    if (label && icon) {
+        const newCard = {
+            id: Date.now(),
+            label: label,
+            icon: icon,
+            cat: 'hoat-dong', // Thẻ mới sẽ nằm trong mục Hành Động
+            accent: '#185FA5', 
+            bg: '#E6F1FB'
+        };
+
+        // Thêm vào danh sách đang hiển thị
+        CARDS.push(newCard);
+        
+        // Lưu vào bộ nhớ máy (F5 không mất)
+        const currentSaved = JSON.parse(localStorage.getItem('mySoulCards')) || [];
+        currentSaved.push(newCard);
+        localStorage.setItem('mySoulCards', JSON.stringify(currentSaved));
+
+        // Vẽ lại các thẻ trên màn hình ngay lập tức
+        renderCards(); 
+        alert("Tuyệt vời! Bạn đã có thẻ mới.");
+    }
+}
+renderCategories();
+renderCards();
+
+function deleteCard(id, event) {
+    // Dòng này để máy hiểu: "Chỉ xóa thôi, đừng có chọn thẻ này vào câu"
+    event.stopPropagation();
+
+    // Hiện bảng hỏi xác nhận cho chắc chắn
+    if (confirm("Bạn có muốn xóa thẻ này không?")) {
+        // Tìm và xóa trong bộ nhớ trình duyệt
+        let currentSaved = JSON.parse(localStorage.getItem('mySoulCards')) || [];
+        currentSaved = currentSaved.filter(card => card.id !== id);
+        localStorage.setItem('mySoulCards', JSON.stringify(currentSaved));
+
+        // Xóa trong danh sách đang hiện trên màn hình
+        CARDS = CARDS.filter(card => card.id !== id);
+
+        // Vẽ lại giao diện mới (đã mất thẻ vừa xóa)
+        renderCards();
+    }
+}
+// Lệnh xử lý: Khi người dùng kéo thanh trượt, con số hiển thị phải thay đổi theo
+const sRange = document.getElementById('speed-range');
+const sVal = document.getElementById('speed-val');
+
+if (sRange && sVal) {
+    sRange.addEventListener('input', () => {
+        // Cập nhật chữ hiển thị (ví dụ: 1.2x)
+        sVal.textContent = sRange.value + 'x';
+    });
+}
+</script>
